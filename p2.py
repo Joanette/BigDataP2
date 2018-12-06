@@ -26,5 +26,7 @@ keywordtext = df.select('text')
 
 words = keywordtext.rdd.flatMap(lambda line: line.split(" "))
 hashtags = words.filter(lambda w: '#' in w).map(lambda x: (x, 1))
-hashtags = hashtags.reduceByKey(lambda x, y: x+y)
-hashtags.top(10, lambda t: t[1]).show()
+hashtags2 = hashtags.reduceByKey(lambda x, y: x+y)\
+hashtags2.top(10, lambda t: t[1])
+#for x in hashtags2.collect():
+ #   print x
