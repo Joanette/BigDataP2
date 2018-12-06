@@ -21,15 +21,10 @@ stopwords = ["a", "about", "above", "after", "again", "against", "all", "am", "a
              "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself",
              "yourselves"];
 
-
-def wordMapper(word):
-    if word not in stopwords:
-        (word, 1)
-
-
 df = spark.read.json("/user/joanette_rosario/tweets1223anotherhour.json")
 keywordtext = df.select('text')
-count = keywordtext.flatMap(lambda line: line.lower().split()) \
-    .map(wordMapper()) \
-    .reduceByKey(lambda x, y: x + y)
-count.top(10, lambda t: t[1])
+
+words = dataStream.flatMap(lambda line: line.split(" "))
+hashtags = words.filter(lambda w: '#' in w).map(lambda x: (x, 1))
+hashtags = hashtags.reduceByKey(lambda x, y: x+y)
+hashtags.top(10, lambda t: t[1]).show()
