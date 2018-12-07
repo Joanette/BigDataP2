@@ -50,7 +50,6 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
         # Twitter Python Tool wraps the data returned by Twitter
         # as a TwitterDictResponse object.
         try:
-            print tweet['statuses'][u'lang']
             # print screen_name and name
             print "TWEET: ", tweet['user']['screen_name'], "\n"
             # The command below will do pretty printing for JSON data, try it out
