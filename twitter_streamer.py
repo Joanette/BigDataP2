@@ -56,7 +56,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             print "TWEET text: ", tweet['text'], "\n"
             # This next command, prints the tweet as a string
             print "CREATED_AT:", tweet['created_at'], "\n"
-            print "Favorite count: ", tweet("favourites_count"), "\n"
+            print "Favorite count: ", tweet["favourites_count"], "\n"
         except:
             pass
 
