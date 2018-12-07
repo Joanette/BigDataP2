@@ -45,7 +45,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
     # You don't have to set it to stop, but can continue running
     # the Twitter API to collect data for days or even longer.
     tweet_count = 10
-    with open ('text.csv', mode = 'w') as csv_file:
+    with open ('1207.csv', mode = 'w') as csv_file:
         writer = csv.writer(csv_file, delimiter=',', quotechar = '"')
         writer.writerow(['Created_at, screename, text, retweets'])
         for tweet in iterator:
