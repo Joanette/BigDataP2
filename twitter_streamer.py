@@ -44,7 +44,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
     # Here we set it to stop after getting 1000 tweets.
     # You don't have to set it to stop, but can continue running
     # the Twitter API to collect data for days or even longer.
-    #tweet_count = 10
+    tweet_count = 10
     with open ('text.csv', mode = 'w') as csv_file:
         writer = csv.writer(csv_file, delimiter=',', quotechar = '"')
         writer.writerow(['Created_at, screename, text, retweets'])
@@ -68,9 +68,9 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             except:
                 pass
 
-            #if tweet_count <= 0:
-                #print("Done")
-                #break
+            if tweet_count <= 0:
+                print("Done")
+                break
 
 
 if __name__ == "__main__":
