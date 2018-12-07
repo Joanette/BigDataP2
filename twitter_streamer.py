@@ -45,9 +45,6 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
     # You don't have to set it to stop, but can continue running
     # the Twitter API to collect data for days or even longer.
     tweet_count = 10
-    with open('tweet_file.csv', mode='w') as employee_file:
-        tweet_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        tweet_writer.writerow('Created at', 'User Screen name', 'Text', 'Favorite Count')
     for tweet in iterator:
         tweet_count -= 1
         # Twitter Python Tool wraps the data returned by Twitter
@@ -59,9 +56,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             print "TWEET JSON: ", tweet['text'], "\n"
             # This next command, prints the tweet as a string
             print "CREATED_AT:", tweet['created_at'], "\n"
-            print "Favorite count: ", tweet("favorite_count"), "\n"
-            tweet_writer.writerow(
-                [tweet['created_at'], tweet['user']['screen_name'], tweet['text'], tweet("favorite_count")])
+            print "Favorite count: ", tweet("favourites_count"), "\n"
         except:
             pass
 
