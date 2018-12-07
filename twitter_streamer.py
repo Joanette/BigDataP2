@@ -45,28 +45,32 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
     # You don't have to set it to stop, but can continue running
     # the Twitter API to collect data for days or even longer.
     tweet_count = 10
-    for tweet in iterator:
-        tweet_count -= 1
-        # Twitter Python Tool wraps the data returned by Twitter
-        # as a TwitterDictResponse object.
-        try:
-            if tweet['lang'] == 'en':
-                # print screen_name and name
-                print "TWEET username ", tweet['user']['screen_name'], "\n"
-                # The command below will do pretty printing for JSON text try it out
-                print "TWEET text: ", tweet['text'], "\n"
-                # This next command, prints the created_at as a string
-                print "CREATED_AT:", tweet['created_at'], "\n"
-                #this next command prints if what lang tweet is
-                print "lang: " , tweet['lang'], "\n"
-                print "followers: ", tweet['retweet_count'], "\n"
+    with open ('text.csv', mode = 'w') as csv_file:
+        writer = csv.writer(employee_file, delimeter= ",", quotechar = '"')
+        writer.writerow(['Created_at, screename, text, retweets'])
+        for tweet in iterator:
+            tweet_count -= 1
+            # Twitter Python Tool wraps the data returned by Twitter
+            # as a TwitterDictResponse object.
+            try:
+                if tweet['lang'] == 'en':
+                    # print screen_name and name
+                    print "TWEET username ", tweet['user']['screen_name'], "\n"
+                    # The command below will do pretty printing for JSON text try it out
+                    print "TWEET text: ", tweet['text'], "\n"
+                    # This next command, prints the created_at as a string
+                    print "CREATED_AT:", tweet['created_at'], "\n"
+                    #this next command prints if what lang tweet is
+                    print "lang: " , tweet['lang'], "\n"
+                    print "followers: ", tweet['retweet_count'], "\n"
+                    writer.writerow([tweet['created_at'],tweet['user']['screen_name'], tweet['text'], tweet['retweet_count']])
 
-        except:
-            pass
+            except:
+                pass
 
-        if tweet_count <= 0:
-            print("Done")
-            break
+            if tweet_count <= 0:
+                print("Done")
+                break
 
 
 if __name__ == "__main__":
