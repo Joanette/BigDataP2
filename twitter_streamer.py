@@ -48,31 +48,29 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
     with open('tweet_file.csv', mode='w') as employee_file:
         tweet_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         tweet_writer.writerow(['Created at', 'User Screen name', 'Text', 'Favorite Count'])
-    for tweet in iterator:
-        tweet_count -= 1
-        # Twitter Python Tool wraps the data returned by Twitter
-        # as a TwitterDictResponse object.
-        try:
-            screeName =  tweet['user']['screen_name']
-            text = tweet['text']
-            createdAt = tweet['created_at']
-            favoritecount = tweet['favourites_count']
-            # print screen_name and name
-            print "TWEET: ", tweet['user']['screen_name'], "\n"
-            # The command below will do pretty printing for JSON data, try it out
-            print "TWEET text: ", tweet['text'], "\n"
-            # This next command, prints the tweet as a string
-            print "CREATED_AT:", tweet['created_at'], "\n"
-            print "Favorite count: ", tweet("favorite_count"), "\n"
-            with open('tweet_file.csv', mode='w') as employee_file:
-                tweet_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        for tweet in iterator:
+            tweet_count -= 1
+            # Twitter Python Tool wraps the data returned by Twitter
+            # as a TwitterDictResponse object.
+            try:
+                screeName =  tweet['user']['screen_name']
+                text = tweet['text']
+                createdAt = tweet['created_at']
+                favoritecount = tweet['favourites_count']
+                # print screen_name and name
+                print "TWEET: ", tweet['user']['screen_name'], "\n"
+                # The command below will do pretty printing for JSON data, try it out
+                print "TWEET text: ", tweet['text'], "\n"
+                # This next command, prints the tweet as a string
+                print "CREATED_AT:", tweet['created_at'], "\n"
+                print "Favorite count: ", tweet("favorite_count"), "\n"
                 tweet_writer.writerow([createdAt,screeName, text, favoritecount])
-        except:
-            pass
+            except:
+                pass
 
-        if tweet_count <= 0:
-            print("Done")
-            break
+            if tweetls_count <= 0:
+                print("Done")
+                break
 
 if __name__ == "__main__":
 
