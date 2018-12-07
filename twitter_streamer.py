@@ -68,9 +68,9 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             except:
                 pass
 
-            if tweet_count <= 0:
-                print("Done")
-                break
+            #if tweet_count <= 0:
+                #print("Done")
+                #break
 
 
 if __name__ == "__main__":
