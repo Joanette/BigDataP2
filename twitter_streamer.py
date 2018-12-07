@@ -53,7 +53,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             # Twitter Python Tool wraps the data returned by Twitter
             # as a TwitterDictResponse object.
             try:
-                if tweet['lang'] == 'en':
+                if tweet['lang'] == 'en' or tweet['lang'] == 'es':
                     # print screen_name and name
                     print "TWEET username ", tweet['user']['screen_name'], "\n"
                     # The command below will do pretty printing for JSON text try it out
