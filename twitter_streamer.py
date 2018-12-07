@@ -63,6 +63,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
                     #this next command prints if what lang tweet is
                     print "lang: " , tweet['lang'], "\n"
                     print "followers: ", tweet['retweet_count'], "\n"
+                    print "favorite count: ", tweet['favorite_count'], "\n"
                     writer.writerow([tweet['created_at'],tweet['user']['screen_name'], tweet['text'], tweet['retweet_count']])
 
             except:
