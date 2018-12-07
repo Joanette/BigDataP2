@@ -4,7 +4,7 @@ try:
     import json
 except ImportError:
     import simplejson as json
-
+import  csv
 # Import the necessary methods from "twitter" library
 #from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 from tweepy import API
@@ -45,19 +45,22 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
     # You don't have to set it to stop, but can continue running
     # the Twitter API to collect data for days or even longer.
     tweet_count = 10
+    with open('tweet_file.csv', mode='w') as employee_file:
+        tweet_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        tweet_writer.writerow('Created at', 'User Screen name', 'Text', 'Favorite Count')
     for tweet in iterator:
         tweet_count -= 1
         # Twitter Python Tool wraps the data returned by Twitter
         # as a TwitterDictResponse object.
         try:
             # print screen_name and name
-            print("TWEET: ", tweet['user']['screen_name'], "\n")
+            print "TWEET: ", tweet['user']['screen_name'], "\n"
             # The command below will do pretty printing for JSON data, try it out
-            print("TWEET JSON: ", tweet['text'], "\n")
+            print "TWEET JSON: ", tweet['text'], "\n"
             # This next command, prints the tweet as a string
-            print("CREATED_AT:", tweet['created_at'], "\n")
-            print("Favorite count: ", tweet("favorite_count"), "\n")
-           #print ("TWEETS STRING", str(tweet))
+            print "CREATED_AT:", tweet['created_at'], "\n"
+            print "Favorite count: ", tweet("favorite_count"), "\n"
+            tweet_writer.writerow(tweet['created_at'], tweet['user']['screen_name'], tweet['text'], tweet("favorite_count"))
         except:
             pass
 
@@ -66,5 +69,6 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             break
 
 if __name__ == "__main__":
+
     print("Starting to read tweets")
     read_tweets(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
