@@ -30,9 +30,9 @@ def read_credentials():
 
 def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
 
-    #oauth = OAuth(access_token, access_secret, consumer_key, consumer_secret)
-    oauth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    oauth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
+    oauth = OAuth(access_token, access_secret, consumer_key, consumer_secret)
+    #oauth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    #oauth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 
     # Initiate the connection to Twitter Streaming API
     twitter_stream = TwitterStream(auth=oauth)
