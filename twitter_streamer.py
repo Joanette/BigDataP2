@@ -60,7 +60,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             # This next command, prints the tweet as a string
             print "CREATED_AT:", tweet['created_at'], "\n"
             print "Favorite count: ", tweet("favorite_count"), "\n"
-            tweet_writer.writerow(tweet['created_at'], tweet['user']['screen_name'], tweet['text'], tweet("favorite_count"))
+            tweet_writer.writerow([tweet['created_at'], tweet['user']['screen_name'], tweet['text'], tweet("favorite_count")])
         except:
             pass
 
