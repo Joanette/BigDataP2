@@ -56,15 +56,17 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             screeName =  tweet['user']['screen_name']
             text = tweet['text']
             createdAt = tweet['created_at']
-            favoritecount = tweet['favorite_count']
+            favoritecount = tweet['favourites_count']
             # print screen_name and name
             print "TWEET: ", tweet['user']['screen_name'], "\n"
             # The command below will do pretty printing for JSON data, try it out
-            print "TWEET JSON: ", tweet['text'], "\n"
+            print "TWEET text: ", tweet['text'], "\n"
             # This next command, prints the tweet as a string
             print "CREATED_AT:", tweet['created_at'], "\n"
             print "Favorite count: ", tweet("favorite_count"), "\n"
-            tweet_writer.writerow([createdAt,screeName, text, favoritecount])
+            with open('tweet_file.csv', mode='w') as employee_file:
+                tweet_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                tweet_writer.writerow([createdAt,screeName, text, favoritecount])
         except:
             pass
 
