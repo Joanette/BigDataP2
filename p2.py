@@ -23,10 +23,16 @@ stopwords = ["a", "about", "above", "after", "again", "against", "all", "am", "a
 
 df = spark.read.json("/user/joanette_rosario/tweets1223anotherhour.json")
 keywordtext = df.select('text')
-
+#top hasthags from the json will be here
 words = keywordtext.rdd.flatMap(lambda line: line.split(" "))
 hashtags = words.filter(lambda w: '#' in w).map(lambda x: (x, 1))
-hashtags2 = hashtags.reduceByKey(lambda x, y: x+y)\
+hashtags2 = hashtags.reduceByKey(lambda x, y: x+y)
 hashtags2.top(10, lambda t: t[1])
+#top keywords
+
+
+    .map(lambda x: (x, 1))
+keywords2 = hashtags.reduceByKey(lambda x, y: x+y)
+keywords2.top(10, lambda t: t[1])
 #for x in hashtags2.collect():
  #   print x

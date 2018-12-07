@@ -1,61 +1,70 @@
-# YouTube Video: https://www.youtube.com/watch?v=wlnx-7cm4Gg
+ #Import the necessary package to process data in JSON format
+
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
+# Import the necessary methods from "twitter" library
+#from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
+from tweepy import API
+from tweepy import Cursor
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-
+from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 #variables that contain the user credentials to access twitter api
 ACCESS_TOKEN = "1674128370-iOeAEsMsmJvCjUWVBQnvpQKGJPgiscw6XHdIV7Q"
-ACCESS_TOKEN_SECRET = "hB7xgbCbjk5LllWncAYvhkWh586il6poiblb2URzrfioH"
+ACCESS_SECRET = "hB7xgbCbjk5LllWncAYvhkWh586il6poiblb2URzrfioH"
 CONSUMER_KEY = "QB8iSkB6bB3v1GgE0ZRggBtnW"
 CONSUMER_SECRET = "spYkunAZHMX6kW9NYEGqQygHJRBSla2znChqq7647V00dxrVtV"
 
-# # # # TWITTER STREAMER # # # #
-class TwitterStreamer():
-    """
-    Class for streaming and processing live tweets.
-    """
+def read_credentials():
+    file_name = "credentials.json"
+    try:
+        with open(file_name) as data_file:
+            return json.load(data_file)
+    except:
+        print ("Cannot load credentials.json")
+        return None
 
-    def __init__(self):
-        pass
+def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
 
-    def stream_tweets(self, fetched_tweets_filename, hash_tag_list):
-        # This handles Twitter authetification and the connection to Twitter Streaming API
-        listener = StdOutListener(fetched_tweets_filename)
-        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-        stream = Stream(auth, listener)
+    #oauth = OAuth(access_token, access_secret, consumer_key, consumer_secret)
+    oauth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    oauth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 
-        # This line filter Twitter Streams to capture data by the keywords: 
-        stream.filter(track=hash_tag_list)
+    # Initiate the connection to Twitter Streaming API
+    twitter_stream = TwitterStream(auth=oauth)
 
+    # Get a sample of the public data following through Twitter
+    iterator = twitter_stream.statuses.sample()
 
-# # # # TWITTER STREAM LISTENER # # # #
-class StdOutListener(StreamListener):
-    """
-    This is a basic listener that just prints received tweets to stdout.
-    """
-
-    def __init__(self, fetched_tweets_filename):
-        self.fetched_tweets_filename = fetched_tweets_filename
-
-    def on_data(self, data):
+    # Print each tweet in the stream to the screen
+    # Here we set it to stop after getting 1000 tweets.
+    # You don't have to set it to stop, but can continue running
+    # the Twitter API to collect data for days or even longer.
+    tweet_count = 1000
+    for tweet in iterator:
+        tweet_count -= 1
+        # Twitter Python Tool wraps the data returned by Twitter
+        # as a TwitterDictResponse object.
         try:
-            print(data)
-            with open(self.fetched_tweets_filename, 'a') as tf:
-                tf.write(data)
-            return True
-        except BaseException as e:
-            print("Error on_data %s" % str(e))
-        return True
+            # print screen_name and name
+            print("TWEET: ", tweet['user']['screen_name'])
+            # The command below will do pretty printing for JSON data, try it out
+            print("TWEET JSON: ", tweet['text'])
+            # This next command, prints the tweet as a string
+            print("CREATED_AT:", tweet['created_at'])
+            print("Favorite count: ", tweet("favorite_count"))
+            print ("TWEETS STRING", str(tweet))
+        except:
+            pass
 
-    def on_error(self, status):
-        print(status)
+        if tweet_count <= 0:
+            print("Done")
+            break
 
-
-if __name__ == '__main__':
-    # Authenticate using config.py and connect to Twitter Streaming API.
-    hash_tag_list = ["a", "I", "the", "me"]
-    fetched_tweets_filename = "tweets1223948.json"
-
-    twitter_streamer = TwitterStreamer()
-    twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
+if __name__ == "__main__":
+    print("Starting to read tweets")
+    read_tweets(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
