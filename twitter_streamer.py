@@ -50,16 +50,17 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
         # Twitter Python Tool wraps the data returned by Twitter
         # as a TwitterDictResponse object.
         try:
-            # print screen_name and name
-            print "TWEET username ", tweet['user']['screen_name'], "\n"
-            # The command below will do pretty printing for JSON text try it out
-            print "TWEET text: ", tweet['text'], "\n"
-            # This next command, prints the created_at as a string
-            print "CREATED_AT:", tweet['created_at'], "\n"
-            #this next command prints if what lang tweet is
-            print "lang: " , tweet['lang'], "\n"
-            print "followers", tweet['retweet_count'], "\n"
-            
+            if tweet['lang'] == 'en':
+                # print screen_name and name
+                print "TWEET username ", tweet['user']['screen_name'], "\n"
+                # The command below will do pretty printing for JSON text try it out
+                print "TWEET text: ", tweet['text'], "\n"
+                # This next command, prints the created_at as a string
+                print "CREATED_AT:", tweet['created_at'], "\n"
+                #this next command prints if what lang tweet is
+                print "lang: " , tweet['lang'], "\n"
+                print "followers: ", tweet['retweet_count'], "\n"
+
         except:
             pass
 
