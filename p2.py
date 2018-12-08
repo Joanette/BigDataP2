@@ -21,7 +21,8 @@ stopwords = ["a", "about", "above", "after", "again", "against", "all", "am", "a
              "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself",
              "yourselves"];
 
-df = spark.read.json("/user/joanette_rosario/tweets1223anotherhour.json")
+df = spark.read.format("csv").option("header", "true").option("mode","DROPMALFORMED").load("/user/joanette_rosario/text.csv")
+df.printSchema()
 keywordtext = df.select('text')
 #top hasthags from the json will be here
 words = keywordtext.rdd.flatMap(lambda line: line.split(" "))
@@ -30,9 +31,6 @@ hashtags2 = hashtags.reduceByKey(lambda x, y: x+y)
 hashtags2.top(10, lambda t: t[1])
 #top keywords
 
+#top participants
 
-    .map(lambda x: (x, 1))
-keywords2 = hashtags.reduceByKey(lambda x, y: x+y)
-keywords2.top(10, lambda t: t[1])
-#for x in hashtags2.collect():
- #   print x
+#trump, flu, zika, diarrhea, Ebola, headache, measles
