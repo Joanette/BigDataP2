@@ -58,13 +58,14 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
                     print "TWEET username ", tweet['user']['screen_name'], "\n"
                     # The command below will do pretty printing for JSON text try it out
                     print "TWEET text: ", tweet['text'], "\n"
+                    stringreplaced = tweet['text'].replace(",", " ")
                     # This next command, prints the created_at as a string
                     print "CREATED_AT:", tweet['created_at'], "\n"
                     #this next command prints if what lang tweet is
                     print "lang: " , tweet['lang'], "\n"
                     print "followers: ", tweet['retweet_count'], "\n"
                     print "favorite count: ", tweet['favorite_count'], "\n"
-                    writer.writerow([tweet['created_at'],tweet['user']['screen_name'], tweet['text'], tweet['retweet_count']])
+                    writer.writerow([tweet['created_at'],tweet['user']['screen_name'], stringreplaced, tweet['retweet_count']])
 
             except:
                 pass
