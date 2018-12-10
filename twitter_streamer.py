@@ -45,6 +45,8 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
     # You don't have to set it to stop, but can continue running
     # the Twitter API to collect data for days or even longer.
     tweet_count = 10
+    file = open("textfile.txt", "w")
+
     with open ('1207.csv', mode = 'w') as csv_file:
         writer = csv.writer(csv_file, delimiter=',', quotechar = '"')
         writer.writerow(['Created_at, screename, text, retweets'])
@@ -53,7 +55,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
             # Twitter Python Tool wraps the data returned by Twitter
             # as a TwitterDictResponse object.
             try:
-                if tweet['lang'] == 'en' or tweet['lang'] == 'es':
+                if tweet['lang'] == 'en':
                     # print screen_name and name
                     print "TWEET username ", tweet['user']['screen_name'], "\n"
                     # The command below will do pretty printing for JSON text try it out
@@ -66,7 +68,7 @@ def read_tweets(access_token, access_secret, consumer_key, consumer_secret):
                     print "followers: ", tweet['retweet_count'], "\n"
                     print "favorite count: ", tweet['favorite_count'], "\n"
                     writer.writerow([tweet['created_at'],tweet['user']['screen_name'], stringreplaced, tweet['retweet_count']])
-
+                    file.write(stringreplaced)
             except:
                 pass
 
